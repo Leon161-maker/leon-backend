@@ -21,6 +21,7 @@ app.use('/api/users', userRoutes);
 app.get('/', (req, res) => {
     res.send('Welcome to the API');
 });
+
 // Error Handling Middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
@@ -32,3 +33,5 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+
+module.exports = app;
