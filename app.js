@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const userRoutes = require('./src/routes/users');
 
+// Load environment variables from .env file
 dotenv.config();
 
 const app = express();
@@ -12,9 +13,12 @@ const app = express();
 app.use(bodyParser.json());
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGO_URI, { 
+    useNewUrlParser: true,
+    useUnifiedTopology: true // Recommended option for connection
+})
     .then(() => console.log('MongoDB connected'))
-    .catch(err => console.log(err));
+    .catch(err => console.log('MongoDB connection error:', err));
 
 // Routes
 app.use('/api/users', userRoutes);
@@ -24,7 +28,7 @@ app.get('/', (req, res) => {
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
-    console.error(err.stack);
+    console.error('Error stack:', err.stack);
     res.status(err.status || 500).json({ error: err.message });
 });
 
